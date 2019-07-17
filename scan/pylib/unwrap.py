@@ -4,6 +4,7 @@ import argparse
 import sys
 import os
 from PIL import Image
+import os
 
 high_freq = 49
 rwidth = 500
