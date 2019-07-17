@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+    <script> 
+    folder = "{{MyFolder}}"
+    </script>
+
+    <div class="row"><h1></h1></div>
+   {%include 'scantopbuttons.html'%}
+     <div class="row">
+        <div class="col-md-8">  </div>
+        <div class="col-md-4">  </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8"><img id = "phaseimage" src="{% static "/scan_folder/scan_im_folder/image3.png"%}"  /></div>
+      <div class="col-md-4">
+      {% comment %} {%include "scanfilebuttons.html"%} {% endcomment %}
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row"></div>
+    {%include 'scanbotbuttons.html'%}
+    <div class="row">
+       <div class="col-md-8">  </div>
+       <div class="col-md-4">  </div>
+   </div>
+{% comment %} <script src= "https://unpkg.com/popper.js"></script> {% endcomment %}
+ <script src="/static/scanjq.js"></script>
+ 
+
+{% endblock %}

@@ -1,0 +1,25 @@
+
+
+
+<script src="/static/drop.js">
+      var cities = "{{city_array}}";
+      console.log(cities);
+      renderRowCounter();
+</script>  
+   
+<div class= "dropdown">
+      <button id= 'dropdown' class= "btn btn-primary dropdown-toggle"  data-toggle= "dropdown">
+            Dropdownn <span class= "caret"></span>
+      </button>
+      <p id="demo"></p>
+        <script> cities = "{{city_array}}";
+            //document.getElementById("demo").innerHTML = cities;
+
+        </script>
+      <ul class="dropdown-menu">
+            <li><a href= "#"> Action1</a> </li>
+            <li><a href= "#"> Action2</a> </li>
+            <li><a href= "#"> Action3</a> </li>
+      </ul>
+</div>
+

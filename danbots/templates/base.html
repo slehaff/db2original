@@ -1,0 +1,77 @@
+{% load cms_tags menu_tags sekizai_tags staticfiles %}
+<!DOCTYPE html>
+<!-- <html lang="en"> -->
+<html lang="{{LANGUAGE_CODE}}">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% page_attribute 'meta_description' %}">
+    <meta name="author" content="Meher Krishna Patel">
+
+    <title>{% page_attribute 'page_title' %} - CMS</title>
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon/favicon.ico' %}"/>
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/modern-business.css' %}" rel="stylesheet">
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}"
+    rel="stylesheet" type="text/css">
+
+    {% render_block "css" %}
+    {{ ALDRYN_SNAKE.render_head}}
+
+    {% if request.toolbar %}
+    <style>
+        .cms-toolbar-expanded .navbar-custom {
+            margin-top:  0px;
+            }
+    </style>
+    {% endif %}
+</head>
+
+<body>
+    <script src="{% static 'vendor/jquery/jquery.js' %}"></script>
+    {% cms_toolbar %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/en/">DanBots</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    {% show_menu 0 10 10 10 "danbots/dd_menu.html" %}
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+                <footer>
+                        {% static_placeholder "Footer" %}
+                </footer>
+    </div>
+
+
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    {% render_block "js" %}
+    {{ ALDRYN_SNAKE.render_tail}}
+
+</body>
+
+</html>

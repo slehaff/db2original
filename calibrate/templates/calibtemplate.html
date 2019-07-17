@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+  <script> 
+    folder = "{{MyFolder}}"
+    link = "{{MyLink}}"
+    console.log('folder is:', folder) 
+
+  
+  </script>
+
+    <div class="row"><h1></h1></div>
+   {%include 'caltopbuttons.html'%}
+     <div class="row">
+        <div class="col-md-8">  </div>
+        <div class="col-md-4">  </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8"><img id = "phaseimage" src="{% static "/calib_folder/wilm_im_folder/image5.png"%}"  /></div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row"></div>
+    {%include 'calbotbuttons.html'%}
+    <div class="row">
+       <div class="col-md-8">  </div>
+       <div class="col-md-4">  </div>
+   </div>
+ <script src="/static/calibjq.js"></script>
+
+{% endblock %}
