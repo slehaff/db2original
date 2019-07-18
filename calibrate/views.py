@@ -32,7 +32,7 @@ def cam_librate(folder):
 
 
 def mov_files(dir_to):
-    path = '/home/samir/danbotsIII/calibrate/static/calib_folder/im_folder/'
+    path = '/home/samir/db2/calibrate/static/calib_folder/im_folder/'
     moveto = dir_to
     files = os.listdir(path)
     files.sort()
