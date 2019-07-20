@@ -31,6 +31,9 @@ def calibrate(folder):
     #Calibrate!
     ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
     print(mtx)
+    print("dist:", dist)
+    print("rvecs:", rvecs)
+    print("tvecs:", tvecs)
     np.savez( folder + '/cal' + '.npz', mtx=mtx, dist=dist, rvecs=rvecs, tvecs=tvecs)
     cv2.destroyAllWindows()
     return mtx, dist, rvecs, tvecs
