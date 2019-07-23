@@ -5,8 +5,8 @@ import time
 import pyntcloud
 
 
-rwidth = 500
-rheight = 300
+rwidth = 640
+rheight = 480
 
 
 def sqdist(v1, v2):

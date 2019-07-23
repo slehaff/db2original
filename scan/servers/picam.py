@@ -80,7 +80,7 @@ def new_receive_pi_data(n, to_folder):
             # dec_img = cv2.flip(dec_img, 0)  # flip horisontal
             # dec_img = cv2.flip(dec_img, 0)  # Invert image
             print('received image!')
-            dec_img = dec_img[100:400, 30:530]
+            #dec_img = dec_img[100:400, 30:530]
             i += 1
             folder = '/home/samir/db2/scan/static/scan_folder/im_folder/'
             cv2.imwrite(folder + '/image' + str(i)+'.png', dec_img)

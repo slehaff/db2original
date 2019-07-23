@@ -6,8 +6,8 @@ import os
 from PIL import Image
 
 high_freq = 49
-rwidth = 500
-rheight = 300
+rwidth = 640
+rheight = 480
 
 
 focalLength = 938.0
