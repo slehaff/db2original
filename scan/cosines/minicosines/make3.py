@@ -29,7 +29,6 @@ def makeimage(w, h, wvcount, phi):
 def getstart(i):
     startx = (i%5)*160 + 5
     starty = (i//5)*160 + 5
-    print(startx, starty)
     return startx, starty
 
 def copystamp(x,y, stamp, wholeima):
@@ -45,11 +44,11 @@ def makestamps(stampcount, wvcount, phi, folder):
         startx, starty = getstart(i)
         copystamp(startx, starty, stampimage, wholeima)
     wholeima = np.transpose(wholeima)
-    cv2.imwrite(folder + str(phi + 1) + '_minicos.jpg', wholeima)
+    cv2.imwrite(folder + str(phi + 1) + '_cos.jpg', wholeima)
     
 
 
-def maketexture(w, h, value):
+def maketexture(w, h, value, folder):
     ima = np.full((w,h), value)
     ima = np.transpose(ima)
     cv2.imwrite(folder + 'texture.png', ima)
@@ -57,13 +56,13 @@ def maketexture(w, h, value):
 # file = '/home/samir/db2/scan/static/scan_folder/gamma_im_folder/image1.png'
 # gamma_correct = compensate_gamma(file)
 
-folder = "~/db2/scan/cosines/minicosines"
+folder = "/home/samir/db2/scan/cosines/minicosines/"
 makestamps(15, 10, -1,folder)
 makestamps(15, 10, 0,folder)
 makestamps(15, 10, 1,folder)
-makestamps(15, 10, 5,folder)
-makestamps(15, 10, 6,folder)
-makestamps(15, 10, 7,folder)
+makestamps(15, 1, 5,folder)
+makestamps(15, 1, 6,folder)
+makestamps(15, 1, 7,folder)
 # makeimage(width, height, hf_periods, -1)
 # makeimage(width, height, hf_periods, 0)
 # makeimage(width, height, hf_periods, 1)
