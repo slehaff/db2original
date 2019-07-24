@@ -6,11 +6,11 @@ from PIL import Image
 width = 800
 height = 480
 periods = 1
-hf_periods = 10
+hf_periods = 6
 stampwidth = 150
-stampheight = 150
+stampheight = 110
 stampborder = 5
-
+squares = 20
 
 def makeimage(w, h, wvcount, phi):
     ima = np.zeros((w, h))
@@ -27,8 +27,8 @@ def makeimage(w, h, wvcount, phi):
     return ima
 
 def getstart(i):
-    startx = (i%5)*160 + 5
-    starty = (i//5)*160 + 5
+    startx = (i%stampborder)*(stampwidth+2*stampborder) + stampborder
+    starty = (i//stampborder)*(stampheight+2*stampborder) + stampborder
     return startx, starty
 
 def copystamp(x,y, stamp, wholeima):
@@ -57,12 +57,12 @@ def maketexture(w, h, value, folder):
 # gamma_correct = compensate_gamma(file)
 
 folder = "/home/samir/db2/scan/cosines/minicosines/"
-makestamps(15, 10, -1,folder)
-makestamps(15, 10, 0,folder)
-makestamps(15, 10, 1,folder)
-makestamps(15, 1, 5,folder)
-makestamps(15, 1, 6,folder)
-makestamps(15, 1, 7,folder)
+makestamps(squares, hf_periods, -1,folder)
+makestamps(squares, hf_periods, 0,folder)
+makestamps(squares, hf_periods, 1,folder)
+makestamps(squares, 1, 5,folder)
+makestamps(squares, 1, 6,folder)
+makestamps(squares, 1, 7,folder)
 # makeimage(width, height, hf_periods, -1)
 # makeimage(width, height, hf_periods, 0)
 # makeimage(width, height, hf_periods, 1)
