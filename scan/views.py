@@ -17,9 +17,11 @@ from scan.servers.picam import make_receiver_thread
 from scan.servers.messenger import *
 import shutil
 import json
+from distutils.dir_util import copy_tree
+import shutil
 
 # ************************************************ Help Methods *******************************************************
-
+foldercount = 0  # folder counter
 
 def mov_files(dir_to):
     path = '/home/samir/db2/scan/static/scan/scans/'
@@ -134,6 +136,28 @@ def take_ref(request):
     scan_wrap(folder=folder)
     unwrap_r('scan_wrap2.npy', 'scan_wrap1.npy', folder + '/')
     return HttpResponse('This is the take images view of my scan %s')
+
+
+def train_data(request):
+    global foldercount
+    foldercount += 1
+    print('train data!', foldercount)
+    scanfolder = '/home/samir/db2/scan/static/scan_folder/scan_im_folder/'
+    folder = '/home/samir/db2/scan/static/scan_folder/train_im_folder/'+str(foldercount)+ 'scan_im_folder/'
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
+    copy_tree(scanfolder, folder)
+    ref_folder = '/home/samir/db2/scan/static/scan_folder/scan_ref_folder'
+    three_folder = '/home/samir/db2/3D/static/3scan_folder'
+    unwrap_r('scan_wrap2.npy', 'scan_wrap1.npy', folder )
+    deduct_ref('unwrap.npy', 'unwrap.npy', folder, ref_folder)
+    # generate_color_pointcloud(folder + 'image1.png', folder + '/abs_unwrap.png', folder + '/pointcl.ply')
+    generate_json_pointcloud(folder + 'image1.png', folder +
+                             '/unwrap.png', three_folder + '/pointcl.json')
+    generate_json_pointcloud(folder + 'image1.png', folder +
+                            '/unwrap.png', folder + '/pointcl.json')
+    return render(request, 'scantemplate.html')
 
 
 def unwrap(request):

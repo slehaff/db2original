@@ -25,6 +25,19 @@ $(document).ready(function() {
     });
   });
 
+  $("#traindata").on("click", function() {
+    $.ajax({
+      url: "../scan/traindata/",
+      type: "GET",
+      success: function() {
+        console.log("train data");
+      },
+      error: function() {
+        console.log("error");
+      }
+    });
+  });
+
   $("#phase24").on("click", function() {
     $.ajax({
       url: "../scan/ph24/",
