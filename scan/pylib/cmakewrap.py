@@ -110,6 +110,7 @@ def get_average(array, n):
     return average
 
 
+
 def take_wrap(folder, numpy_file, png_file, preamble, offset):
     print('wrong call !!!!!')
     mask = np.zeros((rheight, rwidth), dtype=np.bool)
@@ -192,6 +193,8 @@ def take_wrap(folder, numpy_file, png_file, preamble, offset):
     print('c_range', c_range)
     print('mask', mask)
     # compute_quality()
+
+
 
 
 def take_v_wrap(folder, numpy_file, png_file, preamble, offset):
