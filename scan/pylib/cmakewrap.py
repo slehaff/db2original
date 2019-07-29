@@ -112,7 +112,7 @@ def get_average(array, n):
 
 
 def take_wrap(folder, numpy_file, png_file, preamble, offset):
-    print('wrong call !!!!!')
+    print('take_wrap !!!!!')
     mask = np.zeros((rheight, rwidth), dtype=np.bool)
     process = np.zeros((rheight, rwidth), dtype=np.bool)
     c_range = np.zeros((rheight, rwidth), dtype=np.float)
@@ -160,9 +160,9 @@ def take_wrap(folder, numpy_file, png_file, preamble, offset):
                      [i, j] - 1.0*im_arr[2][i, j])
                 nom[i, j] = a
                 denom[i, j] = b
-                wrap[i, j] = np.arctan2(1.7320508 * a, b)
+                wrap[i, j] = np.arctan2(1.7320508 * nom[i, j], denom[i, j])
                 if wrap[i, j] < 0:
-                    if a < 0:
+                    if nom[i, j] < 0:
                         wrap[i, j] += 2*np.pi
                     else:
                         wrap[i, j] += 1 * np.pi
@@ -183,15 +183,19 @@ def take_wrap(folder, numpy_file, png_file, preamble, offset):
     cv2.imwrite(png_file, im_wrap)
     nom_file = folder + '/' + str(offset) + 'nom.png'
     cv2.imwrite(nom_file, nom)
+    nom_file = folder + '/' + str(offset) + 'nom.npy'
+    np.save(nom_file, nom, allow_pickle=False)
     denom_file = folder + '/' + str(offset) + 'denom.png'
     cv2.imwrite(denom_file, denom)
+    denom_file = folder + '/' + str(offset) + 'denom.npy'
+    np.save(denom_file, denom, allow_pickle=False)
     bkg_file = folder + '/' + str(offset) + 'bkg.png'
     cv2.imwrite(bkg_file, bkg_intensity)
     # mask_file = folder + '/' + str(offset) + 'mask.png'
     # cv2.imwrite(mask_file, mask)
     cv2.destroyAllWindows()
-    print('c_range', c_range)
-    print('mask', mask)
+    print('nom', nom)
+    print('denom', denom)
     # compute_quality()
 
 
@@ -229,3 +233,44 @@ def take_v_wrap(folder, numpy_file, png_file, preamble, offset):
 
 
 cv2.destroyAllWindows()
+
+
+
+def nn_wrap(nom, denom):
+    # image = cv2.imread(nom)
+    # greynom = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # image = cv2.imread(denom)
+    # greydenom = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    wrap = np.zeros((rheight, rwidth), dtype=np.float)
+    im_wrap = np.zeros((rheight, rwidth), dtype=np.float)
+    # greynom = np.zeros((rheight, rwidth), dtype=np.float)
+    # greydenom = np.zeros((rheight, rwidth), dtype=np.float)
+    greynom = np.load(nom)
+    greydenom = np.load(denom)
+    for i in range(rheight):
+        for j in range(rwidth):
+            wrap[i, j] = np.arctan2(1.7320508 *greynom[i, j], greydenom[i, j])
+            if wrap[i, j] < 0:
+                if greynom[i, j] < 0:
+                    wrap[i, j] += 2*np.pi
+                else:
+                    wrap[i, j] += 1 * np.pi
+            im_wrap[i, j] = 128/np.pi * wrap[i, j]
+
+    wrap = cv2.GaussianBlur(wrap, (3, 3), 0)
+    im_wrap = cv2.GaussianBlur(im_wrap, (3, 3), 0)
+    return(im_wrap)
+
+
+
+
+def testarctan(folder):
+    nominator = folder + '1nom.npy'
+    denominator = folder + '1denom.npy'
+    test_im_wrap = nn_wrap(nominator, denominator)
+    png_file = folder + 'test2_im_wrap.png'
+    cv2.imwrite(png_file, test_im_wrap)
+
+
+# folder = '/home/samir/db2/scan/static/scan_folder/scan_im_folder/' 
+# testarctan(folder)
