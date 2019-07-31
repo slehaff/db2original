@@ -268,9 +268,15 @@ def testarctan(folder):
     nominator = folder + '1nom.npy'
     denominator = folder + '1denom.npy'
     test_im_wrap = nn_wrap(nominator, denominator)
-    png_file = folder + 'test2_im_wrap.png'
+    png_file = folder + 'npy_im_wrap.png'
     cv2.imwrite(png_file, test_im_wrap)
 
 
 # folder = '/home/samir/db2/scan/static/scan_folder/scan_im_folder/' 
 # testarctan(folder)
+# greynom = np.load(folder + '1denom.npy')
+# cv2.imwrite(folder + 'npy1denom.png',
+#             (greynom).astype(np.uint8))
+# greynom = np.load(folder + '1nom.npy')
+# cv2.imwrite(folder + 'npy1nom.png',
+#             (greynom).astype(np.uint8))
