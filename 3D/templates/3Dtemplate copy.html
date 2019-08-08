@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<style>
+#canvas {
+  background-color: #FFF;
+  width: 640px;
+  height:480px;
+/*  border: 1px solid black;*/
+}
+</style>
+
+    <div class="row"><h1>3D Render</h1></div>
+     <div class="row">
+        <div id="canvas" class="col-md-8">  </div>
+        <div class="col-md-4"><h1> Testing</h1>  </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8"></div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row"></div>
+    <div class="row">
+       <div class="col-md-8">  </div>
+       <div class="col-md-4">  </div>
+   </div>
+   <script src="/static/js/three.js"></script>
+   <script src="/static/js/controls/OrbitControls.js"></script>
+   <script>
+
+var scene, camera, renderer;
+var geometry, material;
+start();
+function start() {
+
+    $.ajax({
+  'type':'GET',
+  'url':'/static/3scan_folder/nn14.json',
+  'dataType':'json',
+  'contextType': 'text/plain',
+  'crossDomain': true,
+  'xhrFields': { 'withCredentials': true },
+  'success':function(msg) {
+      init(msg, msg, 100);
+    }
+    });
+}
+function init(data1, data2, offset) {
+  //console.log(data);
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+    //controls.update() must be called after any manual changes to the camera's transform
+    camera.position.set( 100, 200, 300 );
+    var geometry = new THREE.Geometry();
+    var colors = [];
+    geometry.vertexColors = true
+    for ( var x = 0; x < data1.length; x = x+2){
+      var pointCoord = data1[ x ].split(" ");
+      var colorDets = data1[ x+1 ].split(" ");
+      if ( pointCoord.length != 3 || colorDets.length != 3) continue;
+      colors[x/2] = new THREE.Color();
+      colors[x/2].setRGB(colorDets[0]/255, colorDets[1]/255, colorDets[2]/255 );
+      geometry.vertices.push(
+        new THREE.Vector3(pointCoord[2], pointCoord[1], pointCoord[0])
+      );
+    };
+
+    geometry.colors = colors;
+    // material
+    material = new THREE.PointsMaterial( {
+        size: 1,
+        transparent: false,
+        opacity: 0.99,
+        vertexColors: THREE.VertexColors
+    } );
+
+    particleSystem = new THREE.Points( geometry, material );
+    scene.add( particleSystem );
+    particleSystem.position.set(-offset, 0, 0);
+
+    var geometry = new THREE.Geometry();
+    var colors = [];
+    geometry.vertexColors = true
+    for ( var x = 0; x < data2.length; x = x+2){
+      var pointCoord = data2[ x ].split(" ");
+      var colorDets = data2[ x+1 ].split(" ");
+      if ( pointCoord.length != 3 || colorDets.length != 3) continue;
+      colors[x/2] = new THREE.Color();
+      colors[x/2].setRGB(colorDets[0]/255, colorDets[1]/255, colorDets[2]/255 );
+      geometry.vertices.push(
+        new THREE.Vector3(pointCoord[2], pointCoord[1], pointCoord[0])
+      );
+    };
+
+    geometry.colors = colors;
+    // material
+    material = new THREE.PointsMaterial( {
+        size: 1,
+        transparent: false,
+        opacity: 0.99,
+        vertexColors: THREE.VertexColors
+    } );
+
+    particleSystem = new THREE.Points( geometry, material );
+    scene.add( particleSystem );
+    particleSystem.position.set(offset, 0, 0);
+
+
+    //camera.lookAt( 0, 0, 0 );
+    renderer = new THREE.WebGLRenderer();
+    var container = document.getElementById('canvas');
+    var w = container.offsetWidth;
+    var h = container.offsetHeight;
+    renderer.setSize(w, h);
+    container.appendChild(renderer.domElement);
+    window.addEventListener('resize', function(){
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    //renderer.setSize(width, height);
+    camera.aspect = width / height ;
+    camera.updateProjectionMatrix();
+  });
+    var controls = new THREE.OrbitControls( camera, renderer.domElement );
+  }
+    var update = function(){
+  };
+
+  var animate = function(){
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+    update();
+    };
+  animate();
+</script>
+{% endblock %}

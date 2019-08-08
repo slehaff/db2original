@@ -53,6 +53,11 @@ def maketexture(w, h, value, folder):
     ima = np.transpose(ima)
     cv2.imwrite(folder + 'texture.png', ima)
 
+
+def makeblack(w, h, value, folder):
+    ima = np.full((w,h), value)
+    ima = np.transpose(ima)
+    cv2.imwrite(folder + 'black.png', ima)
 # file = '/home/samir/db2/scan/static/scan_folder/gamma_im_folder/image1.png'
 # gamma_correct = compensate_gamma(file)
 
@@ -70,3 +75,4 @@ makestamps(squares, 1, 7,folder)
 # makeimage(width, height, periods, 6)
 # makeimage(width, height, periods, 7)
 maketexture(width, height, 100,folder)
+makeblack(width, height,0, folder)
