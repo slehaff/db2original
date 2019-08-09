@@ -284,7 +284,7 @@ def testarctan(folder):
 folder = '/home/samir/db2/scan/static/scan_folder/scan_im_folder/' 
 image1 = cv2.imread(folder + 'image0.png')
 gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
-image2 = cv2.imread(folder + 'image1.png')
+image2 = cv2.imread(folder + 'image2.png')
 gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 image3 = np.zeros((rwidth, rheight), dtype=np.float)
 image3 = gray2 - gray1

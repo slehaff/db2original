@@ -7,9 +7,11 @@ width = 800
 height = 480
 periods = 1
 hf_periods = 6
-stampwidth = 150
-stampheight = 110
-stampborder = 5
+stampwidth = 120
+stampheight = 80
+stampborder = 20
+widthcount = 5
+heightcount = 4
 squares = 20
 
 def makeimage(w, h, wvcount, phi):
@@ -27,8 +29,9 @@ def makeimage(w, h, wvcount, phi):
     return ima
 
 def getstart(i):
-    startx = (i%stampborder)*(stampwidth+2*stampborder) + stampborder
-    starty = (i//stampborder)*(stampheight+2*stampborder) + stampborder
+    startindex = [[0,0],[1,0],[2,0],[3,0],[4,0],[0,1],[1,1],[2,1],[3,1],[4,1],[0,2],[1,2],[2,2],[3,2],[4,2],[0,3],[1,3],[2,3],[3,3],[4,3]]
+    startx = startindex[i][0] *(stampwidth+2*stampborder) + stampborder
+    starty = startindex[i][1] *(stampheight+2*stampborder) + stampborder
     return startx, starty
 
 def copystamp(x,y, stamp, wholeima):
@@ -42,6 +45,7 @@ def makestamps(stampcount, wvcount, phi, folder):
     stampimage = makeimage(stampwidth, stampheight, wvcount, phi)
     for i in range(stampcount):
         startx, starty = getstart(i)
+        print(startx, starty)
         copystamp(startx, starty, stampimage, wholeima)
     wholeima = np.transpose(wholeima)
     cv2.imwrite(folder + str(phi + 1) + '_cos.jpg', wholeima)
