@@ -247,8 +247,8 @@ def nn_wrap(nom, denom):
     # greydenom = np.zeros((rheight, rwidth), dtype=np.float)
     greynom = np.load(nom)
     greydenom = np.load(denom)
-    for i in range(rheight):
-        for j in range(rwidth):
+    for j in range(rwidth):
+        for i in range(rheight):
             wrap[i, j] = np.arctan2(1.7320508 *greynom[i, j], greydenom[i, j])
             if wrap[i, j] < 0:
                 if greynom[i, j] < 0:
@@ -288,5 +288,16 @@ image2 = cv2.imread(folder + 'image2.png')
 gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 image3 = np.zeros((rwidth, rheight), dtype=np.float)
 image3 = gray2 - gray1
-# gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+image3 =np.transpose(image3)
+mask = np.zeros((rwidth, rheight), dtype=np.bool)
+maskimg = np.zeros((rwidth, rheight), dtype=np.int)
+# mask = (image3 < 50) or (image3 > 200)
+for i in range(rwidth):
+    for j in range(rheight):
+        mask[i,j] = (image3[i,j] < 35)  or (image3[i,j]> 240)
+        mask = np.invert(mask)
+        maskimg[i,j] = mask[i,j]* 200
+maskimg = np.transpose(maskimg)
+gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 cv2.imwrite(folder + 'diff.png', image3)
+cv2.imwrite(folder + 'maskimg.png', maskimg)
