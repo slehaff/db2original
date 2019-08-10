@@ -28,6 +28,11 @@ def makeimage(w, h, wvcount, phi):
     # cv2.imwrite(str(phi + 1) + '_cos.jpg', ima)
     return ima
 
+def maskimage(w, h,val):
+        ima = np.full((w,h), val)
+        return(ima)
+
+
 def getstart(i):
     startindex = [[0,0],[1,0],[2,0],[3,0],[4,0],[0,1],[1,1],[2,1],[3,1],[4,1],[0,2],[1,2],[2,2],[3,2],[4,2],[0,3],[1,3],[2,3],[3,3],[4,3]]
     startx = startindex[i][0] *(stampwidth+2*stampborder) + stampborder
@@ -45,11 +50,19 @@ def makestamps(stampcount, wvcount, phi, folder):
     stampimage = makeimage(stampwidth, stampheight, wvcount, phi)
     for i in range(stampcount):
         startx, starty = getstart(i)
-        print(startx, starty)
         copystamp(startx, starty, stampimage, wholeima)
     wholeima = np.transpose(wholeima)
     cv2.imwrite(folder + str(phi + 1) + '_cos.jpg', wholeima)
+ 
     
+def makemaskstamps(stampcount, folder):
+    wholeima =  np.zeros((width,height))
+    stampimage = maskimage(stampwidth, stampheight, 200)
+    for i in range(stampcount):
+        startx, starty = getstart(i)
+        copystamp(startx, starty, stampimage, wholeima)
+    wholeima = np.transpose(wholeima)
+    cv2.imwrite(folder +  'mask.png', wholeima)
 
 
 def maketexture(w, h, value, folder):
@@ -72,6 +85,7 @@ makestamps(squares, hf_periods, 1,folder)
 makestamps(squares, 1, 5,folder)
 makestamps(squares, 1, 6,folder)
 makestamps(squares, 1, 7,folder)
+makemaskstamps(squares, folder)
 # makeimage(width, height, hf_periods, -1)
 # makeimage(width, height, hf_periods, 0)
 # makeimage(width, height, hf_periods, 1)
