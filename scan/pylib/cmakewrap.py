@@ -294,10 +294,11 @@ maskimg = np.zeros((rwidth, rheight), dtype=np.int)
 # mask = (image3 < 50) or (image3 > 200)
 for i in range(rwidth):
     for j in range(rheight):
-        mask[i,j] = (image3[i,j] < 35)  or (image3[i,j]> 240)
+        mask[i,j] = (image3[i,j] < 55)  or (image3[i,j]> 240)
         mask = np.invert(mask)
         maskimg[i,j] = mask[i,j]* 200
 maskimg = np.transpose(maskimg)
+image3 = np.transpose(image3)
 gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 cv2.imwrite(folder + 'diff.png', image3)
 cv2.imwrite(folder + 'maskimg.png', maskimg)
