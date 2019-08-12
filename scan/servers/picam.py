@@ -83,7 +83,7 @@ def new_receive_pi_data(n, to_folder):
             #dec_img = dec_img[100:400, 30:530]
             i += 1
             folder = '/home/samir/db2/scan/static/scan_folder/im_folder/'
-            cv2.imwrite(folder + '/image' + str(i-1)+'.png', dec_img)
+            cv2.imwrite(folder + '/image' + str(i-2)+'.png', dec_img)
             print('i=', i, image_len, dec_img.shape)
     finally:
         conn.close()

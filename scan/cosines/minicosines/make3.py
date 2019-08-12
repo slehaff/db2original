@@ -3,13 +3,13 @@ import numpy as np
 from PIL import Image
 # from scan.pylib.gamma import *
 
-width = 800
-height = 480
+width = 720
+height = 400
 periods = 1
 hf_periods = 6
-stampwidth = 120
-stampheight = 80
-stampborder = 20
+stampwidth = 110
+stampheight = 70
+stampborder = 15
 widthcount = 5
 heightcount = 4
 squares = 20
