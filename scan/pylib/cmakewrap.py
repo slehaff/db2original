@@ -121,6 +121,30 @@ def take_wrap(folder, numpy_file, png_file, preamble, offset):
     noise_threshold = 0.1
     z_scale = 130
     z_skew = 24
+    folder = '/home/samir/db2/scan/static/scan_folder/scan_im_folder/' 
+    imagemask = cv2.imread(folder + 'image-1.png')
+    graymask = cv2.cvtColor(imagemask, cv2.COLOR_BGR2GRAY)
+    image1 = cv2.imread(folder + 'image0.png')
+    gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
+    image2 = cv2.imread(folder + 'image2.png')
+    gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+    image3 = np.zeros((rwidth, rheight), dtype=np.float)
+    image3 = gray2 - gray1
+    image4 = cv2.imread(folder + 'mymaskimg.png')
+    gray4 = cv2.cvtColor(image4, cv2.COLOR_BGR2GRAY)
+    gray4 = np.transpose(gray4)
+    image3 =np.transpose(image3)
+    mask = np.zeros((rwidth, rheight), dtype=np.bool)
+    maskimg = np.zeros((rwidth, rheight), dtype=np.int)
+    for i in range(rwidth):
+        for j in range(rheight):
+            mask[i,j] = not((image3[i,j] < 55)  or (image3[i,j]> 240)) and (gray4[i,j] > 20)
+            maskimg[i,j] = mask[i,j]* 200
+    maskimg = np.transpose(maskimg)
+    image3 = np.transpose(image3)
+    gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+    cv2.imwrite(folder + 'diff.png', image3)
+    cv2.imwrite(folder + 'maskimg.png', maskimg)
 
     image_cnt = 3  # Number of images to be taken
     im0 = np.zeros((rwidth, rheight), dtype=np.float)
@@ -141,20 +165,20 @@ def take_wrap(folder, numpy_file, png_file, preamble, offset):
     im_wrap = np.zeros((rheight, rwidth), dtype=np.float)
     for i in range(rheight):
         for j in range(rwidth):
-            phi_sum = float(
-                int(im_arr[0][i, j]) + int(im_arr[1][i, j]) + int(im_arr[2][i, j]))
-            phi_max = float(
-                max(im_arr[0][i, j], im_arr[1][i, j], im_arr[2][i, j]))
-            phi_min = float(
-                min(im_arr[0][i, j], im_arr[1][i, j], im_arr[2][i, j]))
-            phi_range = float(phi_max - phi_min)
-            if phi_sum == 0:
-                phi_sum = .01
-            noise = float(phi_range / phi_sum)
-            mask[i, j] = (noise < noise_threshold)
-            process[i, j] = not(mask[i, j])
-            c_range[i, j] = phi_range
-            if True:  # process[i, j]:
+            # phi_sum = float(
+            #     int(im_arr[0][i, j]) + int(im_arr[1][i, j]) + int(im_arr[2][i, j]))
+            # phi_max = float(
+            #     max(im_arr[0][i, j], im_arr[1][i, j], im_arr[2][i, j]))
+            # phi_min = float(
+            #     min(im_arr[0][i, j], im_arr[1][i, j], im_arr[2][i, j]))
+            # phi_range = float(phi_max - phi_min)
+            # if phi_sum == 0:
+            #     phi_sum = .01
+            # noise = float(phi_range / phi_sum)
+            # mask[i, j] = (noise < noise_threshold)
+            # process[i, j] = not(mask[i, j])
+            # c_range[i, j] = phi_range
+            if (mask[i,j]  > 30): #True:  # process[i, j]:
                 a = (1.0*im_arr[0][i, j]-1.0*im_arr[2][i, j])
                 b = (2.0*im_arr[1][i, j] - 1.0*im_arr[0]
                      [i, j] - 1.0*im_arr[2][i, j])
@@ -282,20 +306,23 @@ def testarctan(folder):
 #             (greynom).astype(np.uint8))
 
 folder = '/home/samir/db2/scan/static/scan_folder/scan_im_folder/' 
+imagemask = cv2.imread(folder + 'image-1.png')
+graymask = cv2.cvtColor(imagemask, cv2.COLOR_BGR2GRAY)
 image1 = cv2.imread(folder + 'image0.png')
 gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
 image2 = cv2.imread(folder + 'image2.png')
 gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 image3 = np.zeros((rwidth, rheight), dtype=np.float)
 image3 = gray2 - gray1
+image4 = cv2.imread(folder + 'mymaskimg.png')
+gray4 = cv2.cvtColor(image4, cv2.COLOR_BGR2GRAY)
+gray4 = np.transpose(gray4)
 image3 =np.transpose(image3)
 mask = np.zeros((rwidth, rheight), dtype=np.bool)
 maskimg = np.zeros((rwidth, rheight), dtype=np.int)
-# mask = (image3 < 50) or (image3 > 200)
 for i in range(rwidth):
     for j in range(rheight):
-        mask[i,j] = (image3[i,j] < 55)  or (image3[i,j]> 240)
-        mask = np.invert(mask)
+        mask[i,j] = not((image3[i,j] < 55)  or (image3[i,j]> 240)) and (gray4[i,j] > 20)
         maskimg[i,j] = mask[i,j]* 200
 maskimg = np.transpose(maskimg)
 image3 = np.transpose(image3)
