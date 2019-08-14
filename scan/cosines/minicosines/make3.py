@@ -6,13 +6,13 @@ from PIL import Image
 width = 720
 height = 400
 periods = 1
-hf_periods = 6
-stampwidth = 110
-stampheight = 70
-stampborder = 15
-widthcount = 5
-heightcount = 4
-squares = 20
+hf_periods = 10
+stampwidth = 160
+stampheight = 120
+stampborder = 5
+widthcount = 4
+heightcount = 3
+squares = 12
 
 def makeimage(w, h, wvcount, phi):
     ima = np.zeros((w, h))
@@ -34,7 +34,7 @@ def maskimage(w, h,val):
 
 
 def getstart(i):
-    startindex = [[0,0],[1,0],[2,0],[3,0],[4,0],[0,1],[1,1],[2,1],[3,1],[4,1],[0,2],[1,2],[2,2],[3,2],[4,2],[0,3],[1,3],[2,3],[3,3],[4,3]]
+    startindex = [[0,0],[1,0],[2,0],[3,0],[0,1],[1,1],[2,1],[3,1],[0,2],[1,2],[2,2],[3,2]]
     startx = startindex[i][0] *(stampwidth+2*stampborder) + stampborder
     starty = startindex[i][1] *(stampheight+2*stampborder) + stampborder
     return startx, starty

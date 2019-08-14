@@ -113,6 +113,7 @@ def get_average(array, n):
 
 def take_wrap(folder, numpy_file, png_file, preamble, offset):
     print('take_wrap !!!!!')
+    print(folder, png_file)
     mask = np.zeros((rheight, rwidth), dtype=np.bool)
     process = np.zeros((rheight, rwidth), dtype=np.bool)
     c_range = np.zeros((rheight, rwidth), dtype=np.float)
@@ -121,30 +122,31 @@ def take_wrap(folder, numpy_file, png_file, preamble, offset):
     noise_threshold = 0.1
     z_scale = 130
     z_skew = 24
-    folder = '/home/samir/db2/scan/static/scan_folder/scan_im_folder/' 
-    imagemask = cv2.imread(folder + 'image-1.png')
-    graymask = cv2.cvtColor(imagemask, cv2.COLOR_BGR2GRAY)
-    image1 = cv2.imread(folder + 'image0.png')
-    gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
-    image2 = cv2.imread(folder + 'image2.png')
-    gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
-    image3 = np.zeros((rwidth, rheight), dtype=np.float)
-    image3 = gray2 - gray1
-    image4 = cv2.imread(folder + 'mymaskimg.png')
-    gray4 = cv2.cvtColor(image4, cv2.COLOR_BGR2GRAY)
-    gray4 = np.transpose(gray4)
-    image3 =np.transpose(image3)
-    mask = np.zeros((rwidth, rheight), dtype=np.bool)
-    maskimg = np.zeros((rwidth, rheight), dtype=np.int)
-    for i in range(rwidth):
-        for j in range(rheight):
-            mask[i,j] = not((image3[i,j] < 55)  or (image3[i,j]> 240)) and (gray4[i,j] > 20)
-            maskimg[i,j] = mask[i,j]* 200
-    maskimg = np.transpose(maskimg)
-    image3 = np.transpose(image3)
-    gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
-    cv2.imwrite(folder + 'diff.png', image3)
-    cv2.imwrite(folder + 'maskimg.png', maskimg)
+    # folder = '/home/samir/db2/scan/static/scan_folder/scan_im_folder/' 
+    # imagemask = cv2.imread(folder + 'image-1.png')
+    # graymask = cv2.cvtColor(imagemask, cv2.COLOR_BGR2GRAY)
+    # image1 = cv2.imread(folder + 'image0.png')
+    # gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
+    # image2 = cv2.imread(folder + 'image2.png')
+    # gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+    # image3 = np.zeros((rwidth, rheight), dtype=np.float)
+    # image3 = gray2 - gray1
+    # image4 = cv2.imread(folder + 'mymaskimg.png')
+    # gray4 = cv2.cvtColor(image4, cv2.COLOR_BGR2GRAY)
+    # gray4 = np.transpose(gray4)
+    # image3 =np.transpose(image3)
+    # mask = np.zeros((rwidth, rheight), dtype=np.bool)
+    # maskimg = np.zeros((rwidth, rheight), dtype=np.int)
+    # for i in range(rwidth):
+    #     for j in range(rheight):
+    #         mask[i,j] = not((image3[i,j] < 55)  or (image3[i,j]> 240)) and (gray4[i,j] > 20)
+    #         maskimg[i,j] = mask[i,j]* 200
+    # maskimg = np.transpose(maskimg)
+    # mask = np.transpose(mask)
+    # image3 = np.transpose(image3)
+    # gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+    # cv2.imwrite(folder + 'diff.png', image3)
+    # cv2.imwrite(folder + 'maskimg.png', maskimg)
 
     image_cnt = 3  # Number of images to be taken
     im0 = np.zeros((rwidth, rheight), dtype=np.float)
@@ -178,7 +180,7 @@ def take_wrap(folder, numpy_file, png_file, preamble, offset):
             # mask[i, j] = (noise < noise_threshold)
             # process[i, j] = not(mask[i, j])
             # c_range[i, j] = phi_range
-            if (mask[i,j]  > 30): #True:  # process[i, j]:
+            if  True: #(maskimg[i,j]  > 30): #True:  # process[i, j]:
                 a = (1.0*im_arr[0][i, j]-1.0*im_arr[2][i, j])
                 b = (2.0*im_arr[1][i, j] - 1.0*im_arr[0]
                      [i, j] - 1.0*im_arr[2][i, j])
@@ -205,6 +207,7 @@ def take_wrap(folder, numpy_file, png_file, preamble, offset):
     np.save(file_path, c_range, allow_pickle=False)
     png_file = folder + '/' + png_file
     cv2.imwrite(png_file, im_wrap)
+    print('written im_wrap:', png_file)
     nom_file = folder + '/' + str(offset) + 'nom.png'
     cv2.imwrite(nom_file, nom)
     nom_file = folder + '/' + str(offset) + 'nom.npy'
@@ -305,27 +308,27 @@ def testarctan(folder):
 # cv2.imwrite(folder + 'npy1nom.png',
 #             (greynom).astype(np.uint8))
 
-folder = '/home/samir/db2/scan/static/scan_folder/scan_im_folder/' 
-imagemask = cv2.imread(folder + 'image-1.png')
-graymask = cv2.cvtColor(imagemask, cv2.COLOR_BGR2GRAY)
-image1 = cv2.imread(folder + 'image0.png')
-gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
-image2 = cv2.imread(folder + 'image2.png')
-gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
-image3 = np.zeros((rwidth, rheight), dtype=np.float)
-image3 = gray2 - gray1
-image4 = cv2.imread(folder + 'mymaskimg.png')
-gray4 = cv2.cvtColor(image4, cv2.COLOR_BGR2GRAY)
-gray4 = np.transpose(gray4)
-image3 =np.transpose(image3)
-mask = np.zeros((rwidth, rheight), dtype=np.bool)
-maskimg = np.zeros((rwidth, rheight), dtype=np.int)
-for i in range(rwidth):
-    for j in range(rheight):
-        mask[i,j] = not((image3[i,j] < 55)  or (image3[i,j]> 240)) and (gray4[i,j] > 20)
-        maskimg[i,j] = mask[i,j]* 200
-maskimg = np.transpose(maskimg)
-image3 = np.transpose(image3)
-gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
-cv2.imwrite(folder + 'diff.png', image3)
-cv2.imwrite(folder + 'maskimg.png', maskimg)
+# folder = '/home/samir/db2/scan/static/scan_folder/scan_im_folder/' 
+# imagemask = cv2.imread(folder + 'image-1.png')
+# graymask = cv2.cvtColor(imagemask, cv2.COLOR_BGR2GRAY)
+# image1 = cv2.imread(folder + 'image0.png')
+# gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
+# image2 = cv2.imread(folder + 'image2.png')
+# gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+# image3 = np.zeros((rwidth, rheight), dtype=np.float)
+# image3 = gray2 - gray1
+# image4 = cv2.imread(folder + 'mymaskimg.png')
+# gray4 = cv2.cvtColor(image4, cv2.COLOR_BGR2GRAY)
+# gray4 = np.transpose(gray4)
+# image3 =np.transpose(image3)
+# mask = np.zeros((rwidth, rheight), dtype=np.bool)
+# maskimg = np.zeros((rwidth, rheight), dtype=np.int)
+# for i in range(rwidth):
+#     for j in range(rheight):
+#         mask[i,j] = not((image3[i,j] < 55)  or (image3[i,j]> 240)) and (gray4[i,j] > 20)
+#         maskimg[i,j] = mask[i,j]* 200
+# maskimg = np.transpose(maskimg)
+# image3 = np.transpose(image3)
+# gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+# cv2.imwrite(folder + 'diff.png', image3)
+# cv2.imwrite(folder + 'maskimg.png', maskimg)

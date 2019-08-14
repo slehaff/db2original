@@ -169,7 +169,7 @@ def unwrap(request):
     deduct_ref('unwrap.npy', 'unwrap.npy', folder, ref_folder)
     # generate_color_pointcloud(folder + 'image1.png', folder + '/abs_unwrap.png', folder + '/pointcl.ply')
     generate_json_pointcloud(folder + 'image1.png', folder +
-                             '/unwrap.png', three_folder + '/pointcl.json')
+                             '/abs_unwrap.png', three_folder + '/pointcl.json')
     return render(request, 'scantemplate.html')
 
 
