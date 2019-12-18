@@ -1,8 +1,9 @@
 import socket
 
+IP = '192.168.0.50'
 
 def message1():
-    IP = '192.168.0.50'
+    
     port = 5005
     message = b'3singlecos'
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -10,7 +11,7 @@ def message1():
 
 
 def message24():
-    IP = '192.168.0.50'
+
     port = 5005
     message = b'3cos'
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -18,7 +19,7 @@ def message24():
 
 
 def cam_cal_mess():
-    IP = '192.168.0.50'
+
     port = 5005
     message = b'cam_cal'
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -26,7 +27,7 @@ def cam_cal_mess():
 
 
 def pro_cal_mess():
-    IP = '192.168.0.50'
+
     port = 5005
     message = b'procal'
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -34,7 +35,7 @@ def pro_cal_mess():
 
 
 def wilm_cal_mess():
-    IP = '192.168.0.50'
+
     port = 5005
     message = b'wilm_cal'
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
