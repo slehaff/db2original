@@ -88,7 +88,7 @@ def generate_pointcloud(depth_file, ply_file):
     points = []
     for i in range(rheight):
         for j in range(rwidth):
-            Z = depth[i, j]*.22
+            Z = depth[i, j]*.44
             Y = .22 * j
             X = .22 * i
             # print(Z[1])

@@ -31,6 +31,8 @@ def calibrate(folder):
     #Calibrate!
     ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
     print(mtx)
+    print(imgpoints)
+    print('imgpoints count', len(imgpoints))
     print("dist:", dist)
     print("rvecs:", rvecs)
     print("tvecs:", tvecs)

@@ -5,7 +5,7 @@ import time
 import pyntcloud
 
 
-rwidth = 640
+rwidth = 400
 rheight = 480
 
 

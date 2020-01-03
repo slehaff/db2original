@@ -16,15 +16,16 @@ def pose(folder):
     # Load previously saved data
     with np.load(folder + '/cal.npz') as X:
         mtx, dist, _, _ = [X[i] for i in ('mtx', 'dist', 'rvecs', 'tvecs')]
+        print('mtx from pose:', mtx)
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
-    objp = np.zeros((5*7, 3), np.float32)
-    objp[:, :2] = np.mgrid[0:7, 0:5].T.reshape(-1, 2)
+    objp = np.zeros((6*9, 3), np.float32)
+    objp[:, :2] = np.mgrid[0:9, 0:6].T.reshape(-1, 2)
     axis = np.float32([[3, 0, 0], [0, 3, 0], [0, 0, -3]]).reshape(-1, 3)
 
     for fname in glob.glob(folder+'/*.png'):
         image = cv2.imread(fname)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        ret, corners = cv2.findChessboardCorners(gray, (7, 5), None)
+        ret, corners = cv2.findChessboardCorners(gray, (9, 6), None)
 
         if ret:
             corners2 = cv2.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)

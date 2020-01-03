@@ -170,6 +170,7 @@ def unwrap(request):
     # generate_color_pointcloud(folder + 'image1.png', folder + '/abs_unwrap.png', folder + '/pointcl.ply')
     generate_json_pointcloud(folder + 'image1.png', folder +
                              '/abs_unwrap.png', three_folder + '/pointcl.json')
+    generate_color_pointcloud(folder + 'image1.png', folder + '/unwrap.png', folder + 'pointcloud.ply')
     return render(request, 'scantemplate.html')
 
 

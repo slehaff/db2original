@@ -12,9 +12,9 @@ import time
 
 def take_wrap(folder, numpy_file, png_file, preamble, offset):
     image_cnt = 3  # Number of images to be taken
-    im0 = np.zeros((640, 480), dtype=np.float)
-    im1 = np.zeros((640, 480), dtype=np.float)
-    im2 = np.zeros((640, 480), dtype=np.float)
+    im0 = np.zeros((400, 480), dtype=np.float)
+    im1 = np.zeros((400, 480), dtype=np.float)
+    im2 = np.zeros((400, 480), dtype=np.float)
     im_arr = [im0, im1, im2]
     # s.sendto(str(0),(host, port)) # Sync projector
     for i in range(image_cnt):
@@ -25,10 +25,10 @@ def take_wrap(folder, numpy_file, png_file, preamble, offset):
         im_arr[i] = gray
         # cv2.imshow("take", im_arr[i])
         # cv2.waitKey(0)
-    wrap = np.zeros((480, 640), dtype=np.float)
-    im_wrap= np.zeros((480, 640), dtype=np.float)
+    wrap = np.zeros((480, 400), dtype=np.float)
+    im_wrap= np.zeros((480, 400), dtype=np.float)
     for i in range(480):
-        for j in range(640):
+        for j in range(400):
             wrap[i, j] = np.arctan2(1.7320508 * (1.0*im_arr[0][i, j]-1.0*im_arr[2][i, j]), (2.0*im_arr[1][i, j] - 1.0*im_arr[0][i, j] - 1.0*im_arr[2][i, j]))
             if wrap[i, j] < 0:
                 wrap[i, j] += 2*np.pi
@@ -44,9 +44,9 @@ def take_wrap(folder, numpy_file, png_file, preamble, offset):
 
 def take_v_wrap(folder, numpy_file, png_file, preamble, offset):
     image_cnt = 3  # Number of images to be taken
-    im0 = np.zeros((640, 480), dtype=np.float)
-    im1 = np.zeros((640, 480), dtype=np.float)
-    im2 = np.zeros((640, 480), dtype=np.float)
+    im0 = np.zeros((400, 480), dtype=np.float)
+    im1 = np.zeros((400, 480), dtype=np.float)
+    im2 = np.zeros((400, 480), dtype=np.float)
     im_arr = [im0, im1, im2]
     # s.sendto(str(0),(host, port)) # Sync projector
     for i in range(image_cnt):
@@ -57,9 +57,9 @@ def take_v_wrap(folder, numpy_file, png_file, preamble, offset):
         im_arr[i] = gray
         # cv2.imshow("take", im_arr[i])
         # cv2.waitKey(0)
-    wrap = np.zeros((480, 640), dtype=np.float)
-    im_wrap= np.zeros((480, 640), dtype=np.float)
-    for j in range(640):
+    wrap = np.zeros((480, 400), dtype=np.float)
+    im_wrap= np.zeros((480, 400), dtype=np.float)
+    for j in range(400):
         for i in range(480):
             wrap[i, j] = np.arctan2(1.7320508 * (1.0*im_arr[0][i, j]-im_arr[2][i, j])/2, (im_arr[1][i, j]-.5*im_arr[0][i, j]-.5*im_arr[2][i, j]))
             if wrap[i, j] < 0:

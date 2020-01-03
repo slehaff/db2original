@@ -43,7 +43,7 @@ def generate_json_pointcloud(rgb_file, depth_file, json_file):
     for v in range(rgb.size[1]):
         for u in range(rgb.size[0]):
             color = rgb.getpixel((u, v))
-            Z = depth.getpixel((u, v)) * .22
+            Z = depth.getpixel((u, v)) * .44
             if Z == 0: continue
             Y = .22 * v
             X = .22 * u

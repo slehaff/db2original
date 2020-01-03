@@ -109,7 +109,7 @@ def results(request, input_id):
 
 
 def campose(request):
-    folder = '/home/samir/db2/calibrate/static/calib_folder/cal_im_folder/'  # + folder
+    folder = '/home/samir/db2/calibrate/static/calib_folder/cal_im_folder/'
     mypose = pose(folder)
     print('campose:', mypose)
     print('json campose', mypose)
