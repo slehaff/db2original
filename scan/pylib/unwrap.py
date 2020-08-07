@@ -4,10 +4,11 @@ import argparse
 import sys
 import os
 from PIL import Image
+from jsoncloud import *
 
-high_freq = 20
-low_frequency = .6
-rwidth = 400
+high_freq = 6
+low_frequency = 1
+rwidth = 640
 rheight = 480
 
 
@@ -88,3 +89,14 @@ def deduct_ref(unwrap, reference, folder1, folder2):
     # np.save('wrap24.pickle', wrap24data, allow_pickle=True)
     net_data = np.multiply(net_data, 1.0)
     cv2.imwrite(folder1 + 'abs_unwrap.png', net_data)
+
+
+
+folder = '/home/samir/db2/scan/static/scan_folder/stars/_scan_im_folder/'
+# ref_folder ='/home/samir/Desktop/blender/pycode/scans/scan_ref_folder' 
+unwrap_r('scan_wrap2.npy', 'scan_wrap1.npy', folder )
+# deduct_ref('scan_wrap2.npy', 'scan_wrap2.npy', folder, ref_folder)
+# generate_json_pointcloud(folder + 'blenderimage2.png', folder + 'unwrap.png', folder +'pointcl.json')
+generate_pointcloud(folder + 'image1.png', folder + 'im_wrap1.png', folder +'pointcl-high.ply')
+generate_pointcloud(folder + 'image1.png', folder + 'im_wrap2.png', folder +'pointcl-low.ply')
+generate_pointcloud(folder + 'image1.png', folder + 'unwrap.png', folder +'pointcl-unw.ply')

@@ -1,12 +1,12 @@
 import cv2
 import numpy as np
 from PIL import Image
-from scan.pylib.gamma import *
+# from scan.pylib.gamma import *
 
-width = 854
-height = 480
+width = 400
+height = 400
 periods = 1
-hf_periods = 49
+hf_periods = 20
 
 
 def makeimage(w, h, wvcount, phi):
